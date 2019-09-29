@@ -25,14 +25,20 @@ module Lita
           robot.receive(msg)
         end
       end
-      
+
       def send_messages(target, messages)
         messages.each do |message|
           client.api.sendChatAction(chat_id: target.room.to_i, action: 'typing')
-          client.api.sendMessage(chat_id: target.room.to_i, text: message)
+
+          case message
+          when String
+            client.api.sendMessage(chat_id: target.room.to_i, text: message)
+          when Hash
+            client.api.sendMessage(chat_id: target.room.to_i, **message)
+          end
         end
       end
-
+      
       Lita.register_adapter(:telegram, self)
     end
   end
