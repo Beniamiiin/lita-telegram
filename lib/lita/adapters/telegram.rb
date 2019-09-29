@@ -25,6 +25,7 @@ module Lita
           robot.receive(msg)
         end
       end
+      
       def send_messages(target, messages)
         messages.each do |message|
           client.api.sendChatAction(chat_id: target.room.to_i, action: 'typing')
